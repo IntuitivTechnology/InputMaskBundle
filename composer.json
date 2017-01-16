@@ -1,0 +1,23 @@
+{
+  "name": "it/input-mask-bundle",
+  "description": "A simple Symfony bundle that implements Form classes for RobinHerbots/Inputmask jQuery plugin ",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pierre Vassoilles",
+      "email": "pvassoilles@intuitiv.fr",
+      "homepage": "https://github.com/pierre-vassoilles",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.5",
+    "symfony/framework-bundle":         "~2.8",
+    "twig/twig":                        "*"
+  },
+  "autoload": {
+    "psr-4": { "IT\\InputMaskBundle\\": "" }
+  },
+  "target-dir": ""
+}
