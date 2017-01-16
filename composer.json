@@ -19,5 +19,5 @@
   "autoload": {
     "psr-4": { "IT\\InputMaskBundle\\": "" }
   },
-  "target-dir": ""
+  "target-dir": "IT/InputMaskBundle"
 }
