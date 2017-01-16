@@ -1,7 +1,7 @@
 {% block script_inputMask %}
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function(event) {
-            var scriptSrc = "{{ asset('bundles/inputmask/vendor/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js') }}";
+            var scriptSrc = "{{ asset('bundles/itinputmask/vendor/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js') }}";
 
             if ($('script[src="'+scriptSrc+'"]').length <= 0) {
                 $.getScript(scriptSrc, function() {
