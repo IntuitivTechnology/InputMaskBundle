@@ -17,7 +17,7 @@
     "twig/twig":                        "*"
   },
   "autoload": {
-    "psr-4": { "IT\\InputMaskBundle\\": "" }
+    "psr-4": { "IT\\InputMaskBundle\\": "IT/InputMaskBundle" }
   },
-  "target-dir": "IT/InputMaskBundle"
+  "target-dir": ""
 }
