@@ -1,5 +1,10 @@
 {% block script_inputMask %}
     <script type="text/javascript">
+
+        if(typeof jQuery == 'undefined'){
+            document.write('<'+'script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"><'+'/script>');
+        }
+
         document.addEventListener("DOMContentLoaded", function(event) {
             var scriptSrc = "{{ asset('bundles/itinputmask/vendor/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js') }}";
 
@@ -25,3 +30,9 @@
 
     {{ block('script_inputMask') }}
 {% endblock it_text_mask_widget %}
+
+{% block it_alias_mask_widget %}
+    <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} data-inputmask="'alias': '{{ mask_alias }}'"/>
+
+    {{ block('script_inputMask') }}
+{% endblock it_alias_mask_widget %}
