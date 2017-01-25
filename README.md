@@ -1,4 +1,4 @@
-# SwiftMailerLoggerBundle
+# InputMaskBundle
 
 A simple Symfony bundle that implements Form classes for RobinHerbots/Inputmask jQuery plugin.
 
@@ -40,19 +40,48 @@ You can use these types in your Sf2 forms :
 
 ```php
     // Will result of a single_widget date picker
-    ->add('birthdate', 'it_date_mask', array(
-        'label' => 'Date of birth',
-    ))
+    $builder
+        ->add('birthdate', 'it_date_mask', array(
+            'label' => 'Date of birth',
+        ))
+    ;
+
+    // -----------
+    // OR
+    // -----------
+
+    use IT\InputMaskBundle\Form\Type\DateMaskType;
+    //...
+    $builder
+        ->add('birthdate', DateMaskType::class, array(
+            'label' => 'Date of birth',
+        ))
+    ;
 ```
 
 OR
 
 ```php
     // Will result of a text widget with the format "[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}"
-    ->add('phone', 'it_text_mask', array(
-        'label' => 'Phone number',
-        'mask' => '99.99.99.99.99'
-    ))
+    $builder
+        ->add('phone', 'it_text_mask', array(
+            'label' => 'Phone number',
+            'mask' => '99.99.99.99.99'
+        ))
+    ;
+
+    // -----------
+    // OR
+    // -----------
+
+    use IT\InputMaskBundle\Form\Type\TextMaskType;
+    //...
+    $builder
+        ->add('phone', TextMaskType::class, array(
+            'label' => 'Phone number',
+            'mask' => '99.99.99.99.99'
+        ))
+    ;
 ```
 
 For the "mask" config, please refer to the RobinHerbots/Inputmask documentation :
