@@ -40,21 +40,19 @@ You can use these types in your Sf2 forms :
 
 ```php
     // Will result of a single_widget date picker
-    $builder
-        ->add('birthdate', 'it_date_mask', array(
-            'label' => 'Date of birth',
-        ))
-    ;
-
-    // -----------
-    // OR
-    // -----------
-
     use IT\InputMaskBundle\Form\Type\DateMaskType;
+    use IT\InputMaskBundle\Form\Type\EmailMaskType;
+    use IT\InputMaskBundle\Form\Type\UrlMaskType;
     //...
     $builder
         ->add('birthdate', DateMaskType::class, array(
             'label' => 'Date of birth',
+        ))
+        ->add('birthdate', EmailMaskType::class, array(
+            'label' => 'Email field',
+        ))
+        ->add('birthdate', UrlMaskType::class, array(
+            'label' => 'Url field',
         ))
     ;
 ```
@@ -63,17 +61,6 @@ OR
 
 ```php
     // Will result of a text widget with the format "[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}"
-    $builder
-        ->add('phone', 'it_text_mask', array(
-            'label' => 'Phone number',
-            'mask' => '99.99.99.99.99'
-        ))
-    ;
-
-    // -----------
-    // OR
-    // -----------
-
     use IT\InputMaskBundle\Form\Type\TextMaskType;
     //...
     $builder
