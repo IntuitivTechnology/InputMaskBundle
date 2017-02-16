@@ -48,10 +48,10 @@ You can use these types in your Sf2 forms :
         ->add('birthdate', DateMaskType::class, array(
             'label' => 'Date of birth',
         ))
-        ->add('birthdate', EmailMaskType::class, array(
+        ->add('email', EmailMaskType::class, array(
             'label' => 'Email field',
         ))
-        ->add('birthdate', UrlMaskType::class, array(
+        ->add('url', UrlMaskType::class, array(
             'label' => 'Url field',
         ))
     ;
