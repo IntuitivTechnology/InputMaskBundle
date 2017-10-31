@@ -8,13 +8,19 @@
 
 namespace IT\InputMaskBundle\Form\Type;
 
-
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class EmailMaskType
+ *
+ * InputMask field with email format
+ *
+ * @package IT\InputMaskBundle\Form\Type
+ */
 class EmailMaskType extends EmailType
 {
 

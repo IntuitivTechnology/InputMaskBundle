@@ -8,12 +8,18 @@
 
 namespace IT\InputMaskBundle\Form\Type;
 
-
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class DateMaskType
+ *
+ * InputMask field with date format (dd/MM/yyyy default)
+ *
+ * @package IT\InputMaskBundle\Form\Type
+ */
 class DateMaskType extends DateType
 {
 
