@@ -9,11 +9,6 @@ services:
     tags:
       - { name: 'form.type', alias: 'it_text_mask' }
 
-  it.inputmask.form.type.date_mask:
-    class: IT\InputMaskBundle\Form\Type\DateMaskType
-    tags:
-      - { name: 'form.type', alias: 'it_date_mask' }
-
   it.inputmask.form.type.url_mask:
     class: IT\InputMaskBundle\Form\Type\UrlMaskType
     tags:
