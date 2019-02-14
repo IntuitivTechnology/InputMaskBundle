@@ -13,3 +13,8 @@ services:
     class: IT\InputMaskBundle\Form\Type\UrlMaskType
     tags:
       - { name: 'form.type', alias: 'it_alias_mask' }
+
+  it.inputmask.form.type.regex_mask:
+    class: IT\InputMaskBundle\Form\Type\RegexMaskType
+    tags:
+    - { name: 'form.type', alias: 'it_regex_mask' }

@@ -36,3 +36,10 @@
 
     {{ block('script_inputMask') }}
 {% endblock it_alias_mask_widget %}
+
+{% block it_regex_mask_widget %}
+    {%- set type = type|default('text') -%}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} data-inputmask-regex="{{ regex }}"/>
+
+    {{ block('script_inputMask') }}
+{% endblock it_regex_mask_widget %}

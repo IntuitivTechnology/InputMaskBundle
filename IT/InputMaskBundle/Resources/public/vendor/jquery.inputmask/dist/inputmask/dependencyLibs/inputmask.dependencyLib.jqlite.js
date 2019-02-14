@@ -1,62 +1,129 @@
 /*!
 * dependencyLibs/inputmask.dependencyLib.jqlite.js
 * https://github.com/RobinHerbots/Inputmask
-* Copyright (c) 2010 - 2017 Robin Herbots
+* Copyright (c) 2010 - 2019 Robin Herbots
 * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
-* Version: 3.3.10
+* Version: 4.0.6
 */
 
-!function(factory) {
-    "function" == typeof define && define.amd ? define([ "jqlite", "../global/window", "../global/document]" ], factory) : "object" == typeof exports ? module.exports = factory(require("jqlite"), require("../global/window"), require("../global/document")) : window.dependencyLib = factory(jqlite, window, document);
-}(function($, window, document) {
+(function(factory) {
+    if (typeof define === "function" && define.amd) {
+        define([ "jqlite", "../global/window" ], factory);
+    } else if (typeof exports === "object") {
+        module.exports = factory(require("jqlite"), require("../global/window"));
+    } else {
+        window.dependencyLib = factory(jqlite, window);
+    }
+})(function($, window) {
+    var document = window.document;
     function indexOf(list, elem) {
-        for (var i = 0, len = list.length; i < len; i++) if (list[i] === elem) return i;
+        var i = 0, len = list.length;
+        for (;i < len; i++) {
+            if (list[i] === elem) {
+                return i;
+            }
+        }
         return -1;
     }
-    function type(obj) {
-        return null == obj ? obj + "" : "object" == typeof obj || "function" == typeof obj ? class2type[class2type.toString.call(obj)] || "object" : typeof obj;
-    }
     function isWindow(obj) {
-        return null != obj && obj === obj.window;
+        return obj != null && obj === obj.window;
     }
     function isArraylike(obj) {
-        var length = "length" in obj && obj.length, ltype = type(obj);
-        return "function" !== ltype && !isWindow(obj) && (!(1 !== obj.nodeType || !length) || ("array" === ltype || 0 === length || "number" == typeof length && length > 0 && length - 1 in obj));
+        var length = "length" in obj && obj.length, ltype = typeof obj;
+        if (ltype === "function" || isWindow(obj)) {
+            return false;
+        }
+        if (obj.nodeType === 1 && length) {
+            return true;
+        }
+        return ltype === "array" || length === 0 || typeof length === "number" && length > 0 && length - 1 in obj;
     }
-    for (var class2type = {}, classTypes = "Boolean Number String Function Array Date RegExp Object Error".split(" "), nameNdx = 0; nameNdx < classTypes.length; nameNdx++) class2type["[object " + classTypes[nameNdx] + "]"] = classTypes[nameNdx].toLowerCase();
-    return $.inArray = function(elem, arr, i) {
-        return null == arr ? -1 : indexOf(arr, elem);
-    }, $.isFunction = function(obj) {
-        return "function" === type(obj);
-    }, $.isArray = Array.isArray, $.isPlainObject = function(obj) {
-        return "object" === type(obj) && !obj.nodeType && !isWindow(obj) && !(obj.constructor && !class2type.hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf"));
-    }, $.extend = function() {
-        var options, name, src, copy, copyIsArray, clone, target = arguments[0] || {}, i = 1, length = arguments.length, deep = !1;
-        for ("boolean" == typeof target && (deep = target, target = arguments[i] || {}, 
-        i++), "object" == typeof target || $.isFunction(target) || (target = {}), i === length && (target = this, 
-        i--); i < length; i++) if (null != (options = arguments[i])) for (name in options) src = target[name], 
-        target !== (copy = options[name]) && (deep && copy && ($.isPlainObject(copy) || (copyIsArray = $.isArray(copy))) ? (copyIsArray ? (copyIsArray = !1, 
-        clone = src && $.isArray(src) ? src : []) : clone = src && $.isPlainObject(src) ? src : {}, 
-        target[name] = $.extend(deep, clone, copy)) : void 0 !== copy && (target[name] = copy));
+    $.inArray = function(elem, arr, i) {
+        return arr == null ? -1 : indexOf(arr, elem, i);
+    };
+    $.isFunction = function(obj) {
+        return typeof obj === "function";
+    };
+    $.isArray = Array.isArray;
+    $.isPlainObject = function(obj) {
+        if (typeof obj !== "object" || obj.nodeType || isWindow(obj)) {
+            return false;
+        }
+        if (obj.constructor && !Object.hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf")) {
+            return false;
+        }
+        return true;
+    };
+    $.extend = function() {
+        var options, name, src, copy, copyIsArray, clone, target = arguments[0] || {}, i = 1, length = arguments.length, deep = false;
+        if (typeof target === "boolean") {
+            deep = target;
+            target = arguments[i] || {};
+            i++;
+        }
+        if (typeof target !== "object" && !$.isFunction(target)) {
+            target = {};
+        }
+        if (i === length) {
+            target = this;
+            i--;
+        }
+        for (;i < length; i++) {
+            if ((options = arguments[i]) != null) {
+                for (name in options) {
+                    src = target[name];
+                    copy = options[name];
+                    if (target === copy) {
+                        continue;
+                    }
+                    if (deep && copy && ($.isPlainObject(copy) || (copyIsArray = $.isArray(copy)))) {
+                        if (copyIsArray) {
+                            copyIsArray = false;
+                            clone = src && $.isArray(src) ? src : [];
+                        } else {
+                            clone = src && $.isPlainObject(src) ? src : {};
+                        }
+                        target[name] = $.extend(deep, clone, copy);
+                    } else if (copy !== undefined) {
+                        target[name] = copy;
+                    }
+                }
+            }
+        }
         return target;
-    }, $.each = function(obj, callback) {
-        var i = 0;
-        if (isArraylike(obj)) for (var length = obj.length; i < length && !1 !== callback.call(obj[i], i, obj[i]); i++) ; else for (i in obj) if (!1 === callback.call(obj[i], i, obj[i])) break;
+    };
+    $.each = function(obj, callback) {
+        var value, i = 0;
+        if (isArraylike(obj)) {
+            for (var length = obj.length; i < length; i++) {
+                value = callback.call(obj[i], i, obj[i]);
+                if (value === false) {
+                    break;
+                }
+            }
+        } else {
+            for (i in obj) {
+                value = callback.call(obj[i], i, obj[i]);
+                if (value === false) {
+                    break;
+                }
+            }
+        }
         return obj;
-    }, $.map = function(elems, callback) {
-        var value, i = 0, length = elems.length, ret = [];
-        if (isArraylike(elems)) for (;i < length; i++) null != (value = callback(elems[i], i)) && ret.push(value); else for (i in elems) null != (value = callback(elems[i], i)) && ret.push(value);
-        return [].concat(ret);
-    }, $.data = function(elem, name, data) {
+    };
+    $.data = function(elem, name, data) {
         return $(elem).data(name, data);
-    }, $.Event = $.Event || function(event, params) {
+    };
+    $.Event = $.Event || function CustomEvent(event, params) {
         params = params || {
-            bubbles: !1,
-            cancelable: !1,
-            detail: void 0
+            bubbles: false,
+            cancelable: false,
+            detail: undefined
         };
         var evt = document.createEvent("CustomEvent");
-        return evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail), 
-        evt;
-    }, $.Event.prototype = window.Event.prototype, $;
+        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+        return evt;
+    };
+    $.Event.prototype = window.Event.prototype;
+    return $;
 });
