@@ -9,7 +9,7 @@ Install with composer :
 composer require it/input-mask-bundle
 ```
 
-### Enable the bundle in your project
+### Enable the bundle in your project (only for Symfony 2-3. Sf4 does it automatically)
 
 ```php
 // app/AppKernel.php
@@ -25,6 +25,7 @@ public function registerBundles()
 
 ## Config
 
+### Symfony 2-3 method
 Add the following line to your `config.yml` :
 ```yaml
 # app/config/config.yml
@@ -34,9 +35,19 @@ twig:
         - 'ITInputMaskBundle:Form:inputMaskFields.html.twig'
 ```
 
+### Symfony 4 method
+```yaml
+# config/packages/input_mask.yml
+# Or in config/packages/twig.yml
+
+twig:
+    form_themes:
+        - '@ITInputMask/Form/inputMaskFields.html.twig'
+```
+
 ## Usage
 
-You can use these types in your Sf2 forms :
+You can use these types in your Symfony forms :
 
 ```php
     // Will result of a single_widget date picker
@@ -67,6 +78,20 @@ OR
         ->add('phone', TextMaskType::class, array(
             'label' => 'Phone number',
             'mask' => '99.99.99.99.99'
+        ))
+    ;
+```
+
+OR with regex type
+
+```php
+    // Will result of a text widget with the format "[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}"
+    use IT\InputMaskBundle\Form\Type\TextMaskType;
+    //...
+    $builder
+        ->add('phone', RegexMaskType::class, array(
+            'label' => 'Phone number',
+            'regex' => '[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}'
         ))
     ;
 ```
